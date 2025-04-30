@@ -49,7 +49,7 @@ tpa-auto-post-bot/
 
 Run the bot:
 ```bash
-python src/bot.py
+python -m src.bot
 ```
 
 ## License
