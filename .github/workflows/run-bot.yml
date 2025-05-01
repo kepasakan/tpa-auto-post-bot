@@ -2,8 +2,10 @@ name: Run TPA Auto-Post Bot
 
 on:
   schedule:
-    # Run at 8:00 AM UTC every day
-    - cron: '0 8 * * *'
+    # Run calendar job at 00:01 UTC every day
+    - cron: '1 0 * * *'
+    # Run motivation job at 07:00 UTC every day
+    - cron: '0 7 * * *'
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
@@ -23,9 +25,32 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Run bot
+    - name: Determine job type
+      id: job-type
+      run: |
+        hour=$(date +%H)
+        minute=$(date +%M)
+        if [ "$hour" = "00" ] && [ "$minute" = "01" ]; then
+          echo "type=calendar" >> $GITHUB_OUTPUT
+        elif [ "$hour" = "07" ] && [ "$minute" = "00" ]; then
+          echo "type=motivation" >> $GITHUB_OUTPUT
+        else
+          # For manual runs, default to both
+          echo "type=both" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Run calendar job
+      if: steps.job-type.outputs.type == 'calendar' || steps.job-type.outputs.type == 'both'
       env:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
       run: |
-        python -m src.bot 
+        python -m src.bot calendar
+
+    - name: Run motivation job
+      if: steps.job-type.outputs.type == 'motivation' || steps.job-type.outputs.type == 'both'
+      env:
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
+      run: |
+        python -m src.bot motivation 
