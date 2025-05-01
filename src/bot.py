@@ -39,11 +39,6 @@ async def main():
     scheduler_obj = await scheduler.setup_scheduler(post_forex_calendar, post_motivation)
     print('TPA Auto-Post Bot is running...')
 
-    # TEMPORARY TEST POST (Manual Trigger)
-    logging.info('Starting test posts...')
-    await post_forex_calendar()
-    await post_motivation()
-
     # Keep alive loop
     try:
         while True:
