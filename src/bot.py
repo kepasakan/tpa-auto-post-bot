@@ -35,17 +35,19 @@ async def main():
         logging.error('Cannot start bot due to Telegram connection issues')
         return
 
-    # Setup scheduler
-    scheduler_obj = await scheduler.setup_scheduler(post_forex_calendar, post_motivation)
-    print('TPA Auto-Post Bot is running...')
-
-    # Keep alive loop
-    try:
-        while True:
-            await asyncio.sleep(1)
-    except (KeyboardInterrupt, SystemExit):
-        scheduler_obj.shutdown()
-        print('Bot stopped.')
+    # Run the appropriate function based on the time
+    # This will be determined by the GitHub Actions workflow
+    import sys
+    if len(sys.argv) > 1:
+        job_type = sys.argv[1]
+        if job_type == 'calendar':
+            await post_forex_calendar()
+        elif job_type == 'motivation':
+            await post_motivation()
+        else:
+            logging.error(f'Unknown job type: {job_type}')
+    else:
+        logging.error('No job type specified')
 
 if __name__ == '__main__':
     asyncio.run(main()) 
