@@ -1,0 +1,31 @@
+name: Run TPA Fun Fact Bot
+
+on:
+  schedule:
+    - cron: '0 16 * * *'  # 12:00PM GMT+8
+  workflow_dispatch:
+
+jobs:
+  fun-fact:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Trading Fun Fact AI Agent
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
+      run: |
+        python src/fun_fact.py
