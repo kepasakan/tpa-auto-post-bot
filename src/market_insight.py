@@ -36,9 +36,7 @@ Tugas anda adalah untuk menghasilkan laporan pasaran harian dalam format **penuh
 - Reaksi semasa pasaran (volatiliti, risk-on/risk-off, aliran modal)
 
 **Arahan Format:**
-Gunakan format yang TETAP dan TEPAT seperti di bawah (jangan ubah struktur atau urutan):
-
-📊 Market Insight - {today}
+Gunakan format yang TETAP dan TEPAT seperti di bawah. **WAJIB masukkan garisan pemisah (__________________________________________________________) selepas Sentimen Pasaran dan sebelum Tip Psikologi. Jangan abaikan atau ubah format struktur ini.**
 
 🔥 Poin Utama:  
 Senaraikan **5 cerita utama pasaran** hari ini (gunakan nombor 1–5), termasuk geopolitik, ekonomi, bank pusat, atau sebarang catalyst utama.
