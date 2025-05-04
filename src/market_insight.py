@@ -1,6 +1,8 @@
 import os
 import google.generativeai as genai
 from datetime import datetime
+from telegram import Bot
+import asyncio
 
 # Load local .env only if not running in GitHub Actions
 if not os.getenv("GITHUB_ACTIONS"):
@@ -11,6 +13,11 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Format today's date (e.g., 4 Mei 2025)
 today = datetime.now().strftime('%#d %B %Y') # Malay-style format
+
+# Telegram bot setup
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+GROUP_CHAT_ID = os.getenv("GROUP_CHAT_ID")
+bot = Bot(token=BOT_TOKEN)
 
 # Gemini model
 model = genai.GenerativeModel("gemini-1.5-pro-latest")
@@ -60,7 +67,11 @@ Jawapan mesti mengandungi:
 """
 
 response = model.generate_content(prompt)
+message = f"📊 *Market Insight - {today}*\n\n{response.text}"
 
-# Output
-print(f"\n📊 Market Insight - {today}")
-print(response.text)
+# Send to Telegram
+async def send_to_telegram():
+    await bot.send_message(chat_id=GROUP_CHAT_ID, text=message, parse_mode='Markdown')
+
+if __name__ == "__main__":
+    asyncio.run(send_to_telegram())
