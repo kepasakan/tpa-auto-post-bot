@@ -18,31 +18,33 @@ async def fetch_forex_calendar():
         raise
 
 def parse_forex_calendar(xml_content):
-    """Parse XML content and return formatted events."""
+    """Parse XML content and return formatted events for the next UTC day."""
     root = ET.fromstring(xml_content)
-    now = datetime.now()
-    today = now.strftime('%m-%d-%Y')
-    events = []
     
+    # Set target to tomorrow's date in UTC
+    tomorrow_utc = datetime.utcnow().date() + timedelta(days=1)
+    target_date_str = tomorrow_utc.strftime('%m-%d-%Y')
+    
+    events = []
+
     for event in root.findall('.//event'):
         date_str = event.find('date').text.strip()
         time_str = event.find('time').text.strip()
         impact = event.find('impact').text if event.find('impact') is not None else 'Low'
-        
-        # Only include High and Medium impact
+
         if impact.lower() not in ['high', 'medium']:
             continue
-            
-        # Skip if not today's date
-        if date_str != today:
-            continue
         
-        # Parse event datetime and add 8 hours for KL time
+        # ✅ Only continue if event is for tomorrow's UTC date
+        if date_str != target_date_str:
+            continue
+
+        # Parse and convert to KL time
         try:
             event_time = datetime.strptime(time_str, '%I:%M%p').time()
             event_date = datetime.strptime(date_str, '%m-%d-%Y').date()
-            event_datetime = datetime.combine(event_date, event_time)
-            kl_datetime = event_datetime + timedelta(hours=8)
+            event_datetime_utc = datetime.combine(event_date, event_time)
+            kl_datetime = event_datetime_utc + timedelta(hours=8)
             formatted_time = kl_datetime.strftime('%I:%M %p')
         except ValueError as e:
             logging.error(f"Time parsing error: {e}")
@@ -52,18 +54,19 @@ def parse_forex_calendar(xml_content):
         country = event.find('country').text
         forecast = event.find('forecast').text if event.find('forecast') is not None else 'N/A'
         previous = event.find('previous').text if event.find('previous') is not None else 'N/A'
-        
+
         event_text = f"⏰ {formatted_time}\n"
         event_text += f"🌍 {country}: {title}\n"
-        if forecast and forecast != 'N/A':
+        if forecast != 'N/A':
             event_text += f"📊 Forecast: {forecast}\n"
-        if previous and previous != 'N/A':
+        if previous != 'N/A':
             event_text += f"📈 Previous: {previous}\n"
         event_text += f"Impact: {'🔴 HIGH' if impact.lower() == 'high' else '🟡 MEDIUM'}\n"
-        
+
         events.append((kl_datetime, impact.lower(), event_text))
     
     return events
+
 
 def format_calendar_message(events):
     """Format the calendar events into a message."""
