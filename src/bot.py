@@ -1,6 +1,6 @@
 import logging
 import asyncio
-from . import calendar
+from . import forex_calendar
 from . import motivation
 from . import scheduler
 
@@ -10,9 +10,9 @@ logging.basicConfig(level=logging.INFO)
 async def post_forex_calendar():
     """Post today's forex calendar events."""
     try:
-        xml_content = await calendar.fetch_forex_calendar()
-        events = calendar.parse_forex_calendar(xml_content)
-        message = calendar.format_calendar_message(events)
+        xml_content = await forex_calendar.fetch_forex_calendar()
+        events = forex_calendar.parse_forex_calendar(xml_content)
+        message = forex_calendar.format_calendar_message(events)
         await scheduler.send_message(message)
         logging.info('Posted Forex Calendar.')
     except Exception as e:
