@@ -28,41 +28,51 @@ Bertindak sebagai seorang penganalisis pasaran profesional dan jurulatih daganga
 
 Hari ini adalah: **{today}**
 
-Sediakan **Ringkasan Pasaran Harian** yang komprehensif, praktikal, dan sesuai untuk trader prop firm.  
-Analisis ini mesti berdasarkan:
-- Data ekonomi semasa (NFP, CPI, PMI, kadar faedah, dll.)
-- Berita berimpak tinggi & kenyataan rasmi bank pusat (FOMC, ECB, BOE, dll.)
-- **Isu geopolitik & fundamental global terkini** (contoh: pilihan raya AS, tindakan Trump, China, konflik Timur Tengah)
-- Reaksi pasaran semasa terhadap faktor-faktor ini
+Tugas anda adalah untuk menghasilkan laporan pasaran harian dalam format **penuh seperti di bawah**, untuk diposkan ke saluran Telegram. Laporan ini mesti berdasarkan:
 
-Fokuskan kepada:
-- **Pasangan mata wang utama**: USD, EUR, GBP, JPY, AUD, NZD, CAD, CHF  
-- **Komoditi penting**: Emas (XAUUSD), Minyak Mentah (WTI)  
-- **Indeks utama**: Nasdaq (NAS100), S&P500 (SPX500)  
+- Data ekonomi berimpak tinggi (NFP, CPI, FOMC, PMI)
+- Fundamental global semasa (pilihan raya AS, inflasi, Fed, ECB, China, geopolitik)
+- Kenyataan bank pusat atau tokoh penting (contoh: Trump, Powell, Lagarde)
+- Reaksi semasa pasaran (volatiliti, risk-on/risk-off, aliran modal)
 
-**Tugas anda:**
-- Jangan hanya nyatakan arah (bullish/bearish), berikan **penjelasan ringkas** untuk setiap pergerakan pasaran (kenapa ia berlaku).  
-- Gunakan bahasa **yang jelas, padat, dan sedia untuk dipos ke saluran Telegram.**
+**Arahan Format:**
+Gunakan format yang TETAP dan TEPAT seperti di bawah (jangan ubah struktur atau urutan):
 
-Jawapan mesti mengandungi:
-
-1. **🔥 Poin Utama (gaya headline)** — ringkasan utama yang trader perlu tahu hari ini  
-2. **🌍 Sentimen Pasaran** — overview sentimen global (bullish, bearish, berhati-hati) dengan sedikit konteks  
-3. **📊 Sorotan Mata Wang & Komoditi**  
-   - Untuk setiap aset (USD, EUR, GBP, dll. + XAUUSD, WTI, NAS100, SPX500), nyatakan arah (bullish/bercampur/bearish) **dan penjelasan ringkas 1 ayat kenapa**  
-4. **💬 Tip Psikologi Hari Ini** — nasihat mindset/risk/disiplin  
-5. **🕒 Waktu Dagangan Ideal (MYT)** — waktu terbaik untuk peluang/volatiliti  
-
-**Contoh format jawapan akhir (wajib ikut):**
+📊 Market Insight - {today}
 
 🔥 Poin Utama:  
+Senaraikan **5 cerita utama pasaran** hari ini (gunakan nombor 1–5), termasuk geopolitik, ekonomi, bank pusat, atau sebarang catalyst utama.
+
 🌍 Sentimen Pasaran:  
-📊 Sorotan Mata Wang & Komoditi:  
-- **USD:** Bullish – Data NFP menguat & Fed mungkin kekal hawkish  
-- **XAUUSD (Emas):** Bearish – USD menguat dan tiada risk-off besar  
-- **NAS100:** Berhati-hati – Isu pilihan raya AS & retorik Trump menyebabkan ketidaktentuan  
+Satu perenggan pendek tentang mood pasaran secara keseluruhan (risk-on, risk-off, bercampur, berhati-hati). Nyatakan kenapa pasaran dalam mood itu.
+
+__________________________________________________________
+
+📊 Sorotan Mata Wang & Komoditi:
+
+- USD: [Bullish/Bearish/Bercampur] – Penjelasan 1 ayat sebab kenapa.
+- EUR: ...
+- GBP: ...
+- JPY: ...
+- AUD: ...
+- NZD: ...
+- CAD: ...
+- CHF: ...
+
+Komoditi :-
+
+- XAUUSD (Emas): [Bullish/Bearish/Bercampur] – Penjelasan 1 ayat.
+- WTI (Minyak Mentah): [Bullish/Bearish/Bercampur] – Penjelasan 1 ayat.
+
+Indeks :-
+
+- NAS100: [Bullish/Bearish/Bercampur] – Penjelasan 1 ayat.
+- SPX500: [Bullish/Bearish/Bercampur] – Penjelasan 1 ayat.
+
+__________________________________________________________
+
 💬 Tip Psikologi Hari Ini:  
-🕒 Waktu Dagangan Ideal (MYT):  
+1 ayat nasihat mindset/psikologi/risk control berdasarkan keadaan pasaran hari ini.
 
 """
 
