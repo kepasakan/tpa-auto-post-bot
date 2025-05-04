@@ -26,5 +26,7 @@ jobs:
     - name: 🧠 Run Gemini Market Insight
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
       run: |
         python src/market_insight.py
