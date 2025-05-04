@@ -19,29 +19,40 @@ model = genai.GenerativeModel("gemini-1.5-pro-latest")
 
 # Prompt to generate a trading-related fun fact with today's date
 prompt = f"""
-Bertindak sebagai seorang guru dagangan yang menyeronokkan dan berpengetahuan luas. Tugas anda adalah untuk memberikan *1 fakta menarik, pelik, atau mengejutkan* berkaitan dunia dagangan seperti forex, saham, kripto, atau indeks.
+Bertindak sebagai seorang guru dagangan yang menyeronokkan, profesional dan berpengetahuan luas. Tugas anda adalah untuk menghasilkan *1 fakta menarik, pelik, atau mengejutkan* berkaitan dunia dagangan seperti forex, saham, kripto, atau indeks.
 
 Hari ini ialah: **{today}**
 
 ✅ Fakta mesti:
-- Mengejutkan, jarang diketahui, atau kelakar
-- Berdasarkan fakta sebenar dan relevan untuk trader
-- Ditulis dalam gaya bahasa santai, mudah difahami, dan ada unsur hiburan
-- Disampaikan dalam 1 perenggan sahaja
-- Sesuai untuk dipos ke Telegram
+- Berdasarkan fakta sebenar (bukan fiksyen)
+- Mengejutkan, jarang diketahui, atau mind-blown untuk trader
+- Sesuai untuk beginner atau prop trader — *bukan terlalu teknikal*
+- Ditulis dalam gaya bahasa santai, penuh karakter, dan mudah difahami
+- Disampaikan dalam **2 perenggan pendek sahaja** untuk mudah dibaca di Telegram
+- Sertakan nombor/angka real jika sesuai
 
 ✅ Format output WAJIB seperti ini:
 
-🎉 **Fun Fact Dagangan Hari Ini ({today})**
+🎉 **Fun Fact Trading Hari Ini**  
+🧠 *[Tajuk mini catchy di sini]*
 
-[1 perenggan fakta penuh di sini, gaya santai, gunakan emoji, bold untuk highlight bahagian menarik, caps lock untuk tekan perkataan penting, dan gunakan ayat yang ajak trader berfikir.]
+[Perenggan 1: Buka dengan ayat punchy atau persoalan menarik — terus kepada fakta unik tersebut. Gunakan emoji dengan bijak, caps lock untuk penekanan, dan bold untuk highlight angka atau point penting.]
 
-Akhiri dengan 1–2 emoji dan hashtag (seperti `#ForexFun`, `#MindBlown`, `#TradingFact`, dll.)
+[Perenggan 2: Ajak pembaca berfikir atau bandingkan situasi dengan konteks dagangan hari ini. Boleh letak unsur humor, refleksi, atau cabaran berfikir.]
 
-Contoh gaya penulisan:
-"Woi trader! 😱 Tahu tak, kalau kita gabungkan SEMUA duit fizikal kat dunia ni, jumlahnya cuma $8 trilion je... tapi nilai pasaran forex **SETIAP HARI** boleh cecah lebih $7.5 trilion! 😵‍💫 Fikirkan tu!"
+Akhiri dengan **1–2 emoji** dan **hashtag** (pilih ikut topik):  
+`#ForexFun #MindBlown #CryptoCrazy #TimeTravelTrading #TraderLife`
 
-Tugas anda hari ini adalah hasilkan **1 fun fact unik dan berformat seperti di atas** berdasarkan tarikh `{today}`.
+Contoh gaya:
+🎉 **Fun Fact Dagangan Hari Ini (05/05/2025)**  
+🧠 *Pizza vs Bitcoin: Pilihan Siapa Lagi Berbaloi?*
+
+Kalau anda belanja $100 untuk pizza tahun 2010 🍕, kenyang sehari. Tapi kalau anda laburkan $100 untuk beli Bitcoin masa tu (harga bawah $0.01!) dan HODL sampai sekarang... anda mungkin dah ada **lebih $500 juta** hari ini! 😵‍💫🚀
+
+Bezanya hanya satu keputusan — makan sekarang, atau sabar & biar duit bekerja. Jadi... nak belanja kopi lagi hari ni, atau simpan untuk future portfolio? 😉  
+#CryptoCrazy #MindBlown
+
+Tugas anda hari ini adalah hasilkan **1 fun fact unik dan berformat seperti di atas** ber.
 """
 
 # Define async function
