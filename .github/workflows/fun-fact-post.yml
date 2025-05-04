@@ -2,7 +2,7 @@ name: Run TPA Fun Fact Bot
 
 on:
   schedule:
-    - cron: '0 16 * * *'  # 12:00PM MYT
+    - cron: '0 4 * * *'  # 12:00PM MYT
   workflow_dispatch:
 
 jobs:
