@@ -2,7 +2,7 @@ name: Daily Market Insight Bot
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at 8:00 AM MYT (0:00 UTC)
+    - cron: '0 22 * * *'  # 06:00 GMT+8
   workflow_dispatch:      # Allow manual run from GitHub UI
 
 jobs:
