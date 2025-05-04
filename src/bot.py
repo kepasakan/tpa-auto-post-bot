@@ -40,7 +40,7 @@ async def main():
     import sys
     if len(sys.argv) > 1:
         job_type = sys.argv[1]
-        if job_type == 'calendar':
+        if job_type == 'forex_calendar':
             await post_forex_calendar()
         elif job_type == 'motivation':
             await post_motivation()
