@@ -1,57 +1,86 @@
-# TPA Auto-Post Bot
+# 🤖 TPA Auto-Post Bot
 
-A Telegram bot that automatically posts forex calendar events and motivational quotes to a specified group chat.
+This project automates daily **Forex trading content posting** to a Telegram channel using:
+- 🧠 Gemini AI (Google Generative AI)
+- 📆 Forex Economic Calendar
+- 💡 Trading Motivation & Psychology Tips
 
-## Features
+## 📌 Features
 
-- Posts daily forex calendar events with high and medium impact
-- Posts daily motivational quotes
-- Automatic scheduling of posts
-- Timezone conversion for KL time (GMT+8)
+| Bot Type           | Description                                                                 | Schedule (MYT) |
+|--------------------|-----------------------------------------------------------------------------|----------------|
+| 🧠 Market Insight  | Auto-generates daily market analysis using Gemini AI                        | 6:00 AM        |
+| 📆 Forex Calendar  | Sends upcoming economic news and impact for the trading day                 | 1:00 AM        |
+| 💬 Motivation Tip  | Sends a motivational message or trading mindset tip                         | 6:00 AM        |
 
-## Project Structure
+---
+
+## 🗂 Folder Structure
 
 ```
 tpa-auto-post-bot/
+├── .github/workflows/
+│ ├── calendar-post.yml # Triggers forex calendar bot
+│ ├── market-insight.yml # Triggers Gemini market insight bot
+│ └── motivation-post.yml # Triggers daily motivation bot
+│
 ├── src/
-│   ├── __init__.py
-│   ├── bot.py
-│   ├── calendar.py
-│   ├── motivation.py
-│   └── scheduler.py
-├── tests/
-│   └── __init__.py
-├── .env.example
-├── .gitignore
-├── requirements.txt
+│ ├── bot.py # Handles job routing & Telegram logic
+│ ├── market_insight.py # Gemini AI market insight logic
+│ ├── forex_calendar.py # Forex news fetcher
+│ ├── motivation.py # Daily mindset tip logic
+│ ├── scheduler.py # Internal dispatcher
+│
+├── .env # Local environment variables (ignored by Git)
+├── env.example # Template for .env file
+├── requirements.txt # All Python dependencies
 └── README.md
 ```
 
-## Setup
 
-1. Clone the repository
-2. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Copy `.env.example` to `.env` and fill in your credentials:
-   ```
-   BOT_TOKEN=your_telegram_bot_token
-   GROUP_CHAT_ID=your_group_chat_id
-   ```
+---
 
-## Usage
+## 🔐 Environment Variables
 
-Run the bot:
-```bash
-python -m src.bot
-```
+Create a `.env` file based on the `env.example` file and set your values:
 
-## License
+- BOT_TOKEN=your_telegram_bot_token
+- GROUP_CHAT_ID=your_telegram_group_id
+- GEMINI_API_KEY=your_google_generative_ai_key
 
-MIT License
+
+> ⚠️ These are required for the bots to function properly.
+
+---
+
+## 🚀 GitHub Actions Automation
+
+Each bot runs via its own **`.yml` file** inside `.github/workflows/`. Example:
+
+- **Market Insight**: `.github/workflows/market-insight.yml`
+- **Motivation**: `.github/workflows/motivation-post.yml`
+- **Forex Calendar**: `.github/workflows/calendar-post.yml`
+
+These run automatically based on the cron schedule, or you can trigger them manually via the GitHub Actions UI.
+
+---
+
+## 🧠 Gemini AI Integration
+
+This project uses `google.generativeai` to generate rich market content.  
+Model used: `gemini-1.5-pro-latest`.
+
+---
+
+## ✅ To Do Next
+
+- [x] Fix Gemini API integration
+- [x] Auto-send to Telegram
+- [ ] Add error handling & logging
+- [ ] Add support for image posts (future)
+
+---
+
+## 👨‍💻 Made with ❤️ by Trader Prop Academy
+
+Follow for more automated trading tools and strategies.
