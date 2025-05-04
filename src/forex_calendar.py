@@ -71,17 +71,18 @@ def parse_forex_calendar(xml_content):
 def format_calendar_message(events):
     """Format the calendar events into a message."""
     now = datetime.now()
-    message = "🚨 *Today's Important Forex Events*\n\n"
+    tomorrow = now + timedelta(days=1)
+    message = "🚨 *Tomorrow's Important Forex Events*\n\n"
     
     if not events:
-        message += 'No important events today. Trade safe! 🛡️'
+        message += 'No important events tomorrow. Trade safe! 🛡️'
     else:
         # Sort events by time, but put HIGH impact first for same time
         events.sort(key=lambda x: (x[0], 0 if x[1] == 'high' else 1))
         today_events = [event[2] for event in events]
         
-        message += f"Date: {now.strftime('%A, %B %d, %Y')}\n\n"
+        message += f"Date: {tomorrow.strftime('%A, %B %d, %Y')}\n\n"
         message += '\n'.join(today_events)
         message += "\n\n⚠️ All times are in KL time (GMT+8)"
     
-    return message 
+    return message
