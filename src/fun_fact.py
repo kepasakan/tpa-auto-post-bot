@@ -3,6 +3,7 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 from datetime import datetime
 from telegram import Bot
+import asyncio
 
 # Load environment variables
 load_dotenv()
@@ -26,15 +27,16 @@ Bertindak sebagai seorang guru dagangan yang menyeronokkan. Tugas anda adalah un
 Sertakan emoji dan tarik minat pembaca. Jangan terlalu panjang.
 """
 
-# Generate content
-response = model.generate_content(prompt)
-fact = response.text.strip()
+# Define async function
+async def main():
+    response = model.generate_content(prompt)
+    fact = response.text.strip()
+    today = datetime.now().strftime('%d/%m/%Y')
+    message = f"🎉 *Fun Fact Dagangan Hari Ini* ({today})\n\n{fact}"
 
-# Format for Telegram
-today = datetime.now().strftime('%d/%m/%Y')
-message = f"🎉 *Fun Fact Dagangan Hari Ini* ({today})\n\n{fact}"
+    bot = Bot(token=BOT_TOKEN)
+    await bot.send_message(chat_id=GROUP_CHAT_ID, text=message, parse_mode='Markdown')
 
-# Send to Telegram
-bot = Bot(token=BOT_TOKEN)
-bot.send_message(chat_id=GROUP_CHAT_ID, text=message, parse_mode='Markdown')
-
+# Run async
+if __name__ == "__main__":
+    asyncio.run(main())
