@@ -2,7 +2,7 @@ name: Daily Market Insight Bot
 
 on:
   schedule:
-    - cron: '0 22 * * *'  # 06:00 GMT+8
+    - cron: '0 22 * * *'  # 07:00 GMT+8
   workflow_dispatch:      # Allow manual run from GitHub UI
 
 jobs:
@@ -23,9 +23,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: 🧠 Run Gemini Market Insight
+    - name: 🧠 Run OpenAI Market Insight
       env:
-        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
       run: |

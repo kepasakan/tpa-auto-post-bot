@@ -1,28 +1,29 @@
 import os
-import google.generativeai as genai
+import asyncio
 from datetime import datetime
 from telegram import Bot
-import asyncio
+import openai
 
-# Load local .env only if not running in GitHub Actions
+# Load local .env if not running on GitHub Actions
 if not os.getenv("GITHUB_ACTIONS"):
     from dotenv import load_dotenv
     load_dotenv()
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
-# Format today's date (e.g., 4 Mei 2025)
-today = datetime.now().strftime('%#d %B %Y') # Malay-style format
-
-# Telegram bot setup
+# Load environment variables
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 GROUP_CHAT_ID = os.getenv("GROUP_CHAT_ID")
+
+# Setup OpenAI
+openai.api_key = OPENAI_API_KEY
+
+# Setup Telegram
 bot = Bot(token=BOT_TOKEN)
 
-# Gemini model
-model = genai.GenerativeModel("gemini-1.5-pro-latest")
+# Format today's date
+today = datetime.now().strftime('%#d %B %Y')
 
-# Prompt with today's date
+# Prompt (same as your Gemini prompt, reused here)
 prompt = f"""
 Bertindak sebagai seorang penganalisis pasaran profesional dan jurulatih dagangan yang pakar dalam menyampaikan sentimen pasaran harian untuk pedagang forex, komoditi, dan indeks.
 
@@ -71,15 +72,27 @@ __________________________________________________________
 
 💬 Tip Psikologi Hari Ini:  
 1 ayat nasihat mindset/psikologi/risk control berdasarkan keadaan pasaran hari ini.
-
 """
 
-response = model.generate_content(prompt)
-message = f"📊 *Market Insight - {today}*\n\n{response.text}"
+# Generate the response using OpenAI
+def generate_insight():
+    completion = openai.ChatCompletion.create(
+        model="gpt-4",  # or "gpt-3.5-turbo" if you want cheaper
+        messages=[
+            {"role": "system", "content": "Anda adalah pakar analisis pasaran profesional."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=1800,
+        temperature=0.7
+    )
+    return completion.choices[0].message.content.strip()
 
 # Send to Telegram
 async def send_to_telegram():
+    response_text = generate_insight()
+    message = f"📊 *Market Insight - {today}*\n\n{response_text}"
     await bot.send_message(chat_id=GROUP_CHAT_ID, text=message, parse_mode='Markdown')
 
+# Run
 if __name__ == "__main__":
     asyncio.run(send_to_telegram())
