@@ -2,9 +2,9 @@ import os
 import asyncio
 from datetime import datetime
 from telegram import Bot
-import openai
+from openai import OpenAI
 
-# Load local .env if not running on GitHub Actions
+# Load .env if not running in GitHub Actions
 if not os.getenv("GITHUB_ACTIONS"):
     from dotenv import load_dotenv
     load_dotenv()
@@ -14,16 +14,16 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 GROUP_CHAT_ID = os.getenv("GROUP_CHAT_ID")
 
-# Setup OpenAI
-openai.api_key = OPENAI_API_KEY
+# Setup OpenAI client
+client = OpenAI(api_key=OPENAI_API_KEY)
 
-# Setup Telegram
+# Setup Telegram bot
 bot = Bot(token=BOT_TOKEN)
 
-# Format today's date
+# Get today's date
 today = datetime.now().strftime('%#d %B %Y')
 
-# Prompt (same as your Gemini prompt, reused here)
+# Prompt for daily market insight
 prompt = f"""
 Bertindak sebagai seorang penganalisis pasaran profesional dan jurulatih dagangan yang pakar dalam menyampaikan sentimen pasaran harian untuk pedagang forex, komoditi, dan indeks.
 
@@ -74,25 +74,25 @@ __________________________________________________________
 1 ayat nasihat mindset/psikologi/risk control berdasarkan keadaan pasaran hari ini.
 """
 
-# Generate the response using OpenAI
+# Generate insight using OpenAI
 def generate_insight():
-    completion = openai.ChatCompletion.create(
-        model="gpt-4",  # or "gpt-3.5-turbo" if you want cheaper
+    response = client.chat.completions.create(
+        model="gpt-4.1",
         messages=[
             {"role": "system", "content": "Anda adalah pakar analisis pasaran profesional."},
             {"role": "user", "content": prompt}
         ],
         max_tokens=1800,
-        temperature=0.7
+        temperature=0.7,
     )
-    return completion.choices[0].message.content.strip()
+    return response.choices[0].message.content.strip()
 
-# Send to Telegram
+# Send the response to Telegram
 async def send_to_telegram():
     response_text = generate_insight()
     message = f"📊 *Market Insight - {today}*\n\n{response_text}"
     await bot.send_message(chat_id=GROUP_CHAT_ID, text=message, parse_mode='Markdown')
 
-# Run
+# Run the async function
 if __name__ == "__main__":
     asyncio.run(send_to_telegram())

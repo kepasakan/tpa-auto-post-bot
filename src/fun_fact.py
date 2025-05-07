@@ -1,23 +1,28 @@
 import os
-import google.generativeai as genai
-from dotenv import load_dotenv
+import asyncio
 from datetime import datetime
 from telegram import Bot
-import asyncio
+from openai import OpenAI
+from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+# ENV VARS
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY_FUN_FACT")  # use your new working key
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 GROUP_CHAT_ID = os.getenv("GROUP_CHAT_ID")
 
-# Get today's date for the prompt
+# Setup OpenAI client
+client = OpenAI(api_key=OPENAI_API_KEY)
+
+# Setup Telegram bot
+bot = Bot(token=BOT_TOKEN)
+
+# Get today's date
 today = datetime.now().strftime('%d/%m/%Y')
 
-# Prepare Gemini model
-model = genai.GenerativeModel("gemini-1.5-pro-latest")
-
-# Prompt to generate a trading-related fun fact with today's date
+# Prompt for fun fact
 prompt = f"""
 Bertindak sebagai seorang guru dagangan yang menyeronokkan, profesional dan berpengetahuan luas. Tugas anda adalah untuk menghasilkan *1 fakta menarik, pelik, atau mengejutkan* berkaitan dunia dagangan seperti forex, saham, kripto, atau indeks.
 
@@ -44,7 +49,7 @@ Akhiri dengan **1–2 emoji** dan **hashtag** (pilih ikut topik):
 `#ForexFun #MindBlown #CryptoCrazy #TimeTravelTrading #TraderLife`
 
 Contoh gaya:
-🎉 **Fun Fact Dagangan Hari Ini (05/05/2025)**  
+🎉 **Fun Fact Dagangan Hari Ini ({today})**  
 🧠 *Pizza vs Bitcoin: Pilihan Siapa Lagi Berbaloi?*
 
 Kalau anda belanja $100 untuk pizza tahun 2010 🍕, kenyang sehari. Tapi kalau anda laburkan $100 untuk beli Bitcoin masa tu (harga bawah $0.01!) dan HODL sampai sekarang... anda mungkin dah ada **lebih $500 juta** hari ini! 😵‍💫🚀
@@ -55,15 +60,24 @@ Bezanya hanya satu keputusan — makan sekarang, atau sabar & biar duit bekerja.
 Tugas anda hari ini adalah hasilkan **1 fun fact unik dan berformat seperti di atas** ber.
 """
 
-# Define async function
+# Generate fun fact using OpenAI
+def generate_fun_fact():
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",  # or "gpt-4" if accessible
+        messages=[
+            {"role": "system", "content": "Anda adalah guru dagangan yang menyeronokkan dan suka berkongsi fakta menarik."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=1000,
+        temperature=0.9,
+    )
+    return response.choices[0].message.content.strip()
+
+# Send to Telegram
 async def main():
-    response = model.generate_content(prompt)
-    fact = response.text.strip()
-    message = fact  # fact already includes the heading with date
+    fact = generate_fun_fact()
+    await bot.send_message(chat_id=GROUP_CHAT_ID, text=fact, parse_mode='Markdown')
 
-    bot = Bot(token=BOT_TOKEN)
-    await bot.send_message(chat_id=GROUP_CHAT_ID, text=message, parse_mode='Markdown')
-
-# Run async
+# Run
 if __name__ == "__main__":
     asyncio.run(main())
