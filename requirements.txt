@@ -4,3 +4,4 @@ requests==2.31.0
 pytz==2024.1
 feedparser==6.0.10
 google-generativeai
+openai==1.14.3
