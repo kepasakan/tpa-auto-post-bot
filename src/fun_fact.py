@@ -49,7 +49,7 @@ Akhiri dengan **1–2 emoji** dan **hashtag** (pilih ikut topik):
 `#ForexFun #MindBlown #CryptoCrazy #TimeTravelTrading #TraderLife`
 
 Contoh gaya:
-🎉 **Fun Fact Dagangan Hari Ini ({today})**  
+🎉 **Fun Fact Dagangan Hari Ini**  
 🧠 *Pizza vs Bitcoin: Pilihan Siapa Lagi Berbaloi?*
 
 Kalau anda belanja $100 untuk pizza tahun 2010 🍕, kenyang sehari. Tapi kalau anda laburkan $100 untuk beli Bitcoin masa tu (harga bawah $0.01!) dan HODL sampai sekarang... anda mungkin dah ada **lebih $500 juta** hari ini! 😵‍💫🚀
@@ -57,7 +57,7 @@ Kalau anda belanja $100 untuk pizza tahun 2010 🍕, kenyang sehari. Tapi kalau 
 Bezanya hanya satu keputusan — makan sekarang, atau sabar & biar duit bekerja. Jadi... nak belanja kopi lagi hari ni, atau simpan untuk future portfolio? 😉  
 #CryptoCrazy #MindBlown
 
-Tugas anda hari ini adalah hasilkan **1 fun fact unik dan berformat seperti di atas** ber.
+Tugas anda hari ini adalah hasilkan **1 fun fact unik dan berformat seperti di atas** berdasarkan fakta sebenar.
 """
 
 # Generate fun fact using OpenAI
