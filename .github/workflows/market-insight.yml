@@ -2,7 +2,7 @@ name: Daily Market Insight Bot
 
 on:
   schedule:
-    - cron: '0 22 * * *'  # 07:00 GMT+8
+    - cron: '0 23 * * *'  # Run at 7:00 AM GMT+8 (convert to UTC)
   workflow_dispatch:      # Allow manual run from GitHub UI
 
 jobs:
@@ -23,10 +23,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: 🧠 Run OpenAI Market Insight
+    - name: 🧠 Run OpenAI Market Insight Bot
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
+        NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
       run: |
         python src/market_insight.py
