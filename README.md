@@ -83,4 +83,4 @@ Model used: `gemini-1.5-pro-latest`.
 
 ## 👨‍💻 Made with ❤️ by Trader Prop Academy
 
-Follow for more automated trading tools and strategies.
+Follow for more automated trading tools and strategies
