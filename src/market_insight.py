@@ -26,10 +26,16 @@ def fetch_market_headlines(hours=24, count=5):
     now = datetime.now(timezone.utc)
     from_time = (now - timedelta(hours=hours)).isoformat()
 
+    # Trusted economic/financial sources
+    economic_sources = (
+        "bloomberg.com,reuters.com,cnbc.com,ft.com,economist.com,"
+        "marketwatch.com,wsj.com,investing.com,forexlive.com"
+    )
+
     url = (
         f"https://newsapi.org/v2/everything?"
-        f"q=Fed OR FOMC OR Trump OR inflation OR Powell OR CPI OR ECB OR Gold OR Dollar OR China OR rate hike "
-        f"&from={from_time}&sortBy=popularity&language=en"
+        f"from={from_time}&sortBy=popularity&language=en"
+        f"&domains={economic_sources}"
         f"&apiKey={NEWSAPI_KEY}"
     )
 
@@ -51,26 +57,26 @@ def fetch_market_headlines(hours=24, count=5):
 # Get today's date
 today = datetime.now().strftime('%#d %B %Y')
 
-# 🔹 Top 5 in 24 hours
-top_news_24h = fetch_market_headlines(hours=24, count=5)
+# 🔹 Top 20 in 24 hours
+top_news_24h = fetch_market_headlines(hours=24, count=20)
+print("✅ Top News 24H:\n", top_news_24h)  # 👈 Add this
 
 # 🔹 Top 20 in past 5 days
 top_news_5d_raw = fetch_market_headlines(hours=120, count=20)
 top_news_5d = "\n".join([f"{i+1}. {line}" for i, line in enumerate(top_news_5d_raw.splitlines())])
+print("✅ Top News 5D:\n", top_news_5d)  # 👈 Add this
 
 # 🔹 Final prompt
 prompt = f"""
 📌 Anda diberikan dua senarai berita utama berdasarkan populariti:
 
-🕒 **5 berita paling popular dalam 24 jam terakhir:**
+🕒 **20 berita paling popular dalam 24 jam terakhir:**
 {top_news_24h}
 
 🗓️ **20 berita paling popular dalam 5 hari terakhir:**
 {top_news_5d}
 
 Gunakan kedua-dua senarai ini untuk menulis laporan pasaran harian secara lengkap dan menyeluruh.
-
-Hari ini adalah: **{today}**
 
 🔥 Poin Utama:  
 Senaraikan **5 cerita utama pasaran** hari ini (gunakan nombor 1–5), berdasarkan berita di atas.
@@ -82,24 +88,23 @@ __________________________________________________________
 
 📊 Sorotan Mata Wang & Komoditi:
 
-- USD: [Bullish/Bearish/Bercampur] – 1 ayat berdasarkan berita.
-- EUR: ...
-- GBP: ...
-- JPY: ...
-- AUD: ...
-- NZD: ...
-- CAD: ...
-- CHF: ...
+💵 Mata Wang:
+- **USD** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
+- **EUR** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
+- **GBP** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
+- **JPY** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
+- **AUD** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
+- **NZD** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
+- **CAD** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
+- **CHF** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
 
-Komoditi :-
+🛢 Komoditi:
+- **XAUUSD (Emas)** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
+- **WTI (Minyak)** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
 
-- XAUUSD (Emas): [Bullish/Bearish/Bercampur] – Penjelasan 1 ayat.
-- WTI (Minyak Mentah): [Bullish/Bearish/Bercampur] – Penjelasan 1 ayat.
-
-Indeks :-
-
-- NAS100: [Bullish/Bearish/Bercampur] – Penjelasan 1 ayat.
-- SPX500: [Bullish/Bearish/Bercampur] – Penjelasan 1 ayat.
+📈 Indeks:
+- **NAS100** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
+- **SPX500** → [📈 Bullish / 📉 Bearish / 📊 Bercampur] — [1 ayat sebab]
 
 __________________________________________________________
 
@@ -134,3 +139,5 @@ async def send_to_telegram():
 # 🔹 Run
 if __name__ == "__main__":
     asyncio.run(send_to_telegram())
+
+
