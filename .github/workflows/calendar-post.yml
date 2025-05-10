@@ -2,7 +2,7 @@ name: Run TPA Calendar Bot
 
 on:
   schedule:
-    - cron: '0 17 * * *'  # 01:00 GMT+8
+    - cron: '0 17 * * 0-4'  # 01:00 GMT+8
   workflow_dispatch:
 
 jobs:

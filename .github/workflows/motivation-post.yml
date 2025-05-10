@@ -2,7 +2,7 @@ name: Run TPA Motivation Bot
 
 on:
   schedule:
-    - cron: '0 23 * * *'  # 06:00 GMT+8
+    - cron: '0 23 * * 0-4'  # 06:00 GMT+8
   workflow_dispatch:
 
 jobs:
