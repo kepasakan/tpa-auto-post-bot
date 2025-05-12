@@ -21,12 +21,12 @@ NEWSAPI_KEY = os.getenv("NEWSAPI_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 bot = Bot(token=BOT_TOKEN)
 
-# ✅ Fetch headlines based on hour range & count
-def fetch_market_headlines(hours=24, count=5):
+# ✅ Fetch headlines for last 24 hours
+def fetch_market_headlines_24h(count=5):
     now = datetime.now(timezone.utc)
-    from_time = (now - timedelta(hours=hours)).isoformat()
+    from_time = (now - timedelta(hours=24)).isoformat()
+    to_time = now.isoformat()
 
-    # Trusted economic/financial sources
     economic_sources = (
         "bloomberg.com,reuters.com,cnbc.com,ft.com,economist.com,"
         "marketwatch.com,wsj.com,investing.com,forexlive.com"
@@ -34,7 +34,7 @@ def fetch_market_headlines(hours=24, count=5):
 
     url = (
         f"https://newsapi.org/v2/everything?"
-        f"from={from_time}&sortBy=popularity&language=en"
+        f"from={from_time}&to={to_time}&sortBy=popularity&language=en"
         f"&domains={economic_sources}"
         f"&apiKey={NEWSAPI_KEY}"
     )
@@ -54,17 +54,52 @@ def fetch_market_headlines(hours=24, count=5):
 
     return "\n".join(top_headlines)
 
+# ✅ Fetch headlines for last 5 days
+def fetch_market_headlines_5d(count=5):
+    now = datetime.now(timezone.utc)
+    from_time = (now - timedelta(days=5)).isoformat()
+    to_time = now.isoformat()
+
+    economic_sources = (
+        "bloomberg.com,reuters.com,cnbc.com,ft.com,economist.com,"
+        "marketwatch.com,wsj.com,investing.com,forexlive.com"
+    )
+
+    url = (
+        f"https://newsapi.org/v2/everything?"
+        f"from={from_time}&to={to_time}&sortBy=popularity&language=en"
+        f"&domains={economic_sources}"
+        f"&apiKey={NEWSAPI_KEY}"
+    )
+
+    response = requests.get(url)
+    articles = response.json().get("articles", [])
+
+    top_headlines = []
+    for article in articles[:count]:
+        title = article.get("title")
+        source = article.get("source", {}).get("name")
+        if title and source:
+            top_headlines.append(f"- {title} ({source})")
+
+    if not top_headlines:
+        top_headlines.append("- Tiada berita penting ditemui dalam tempoh ini.")
+
+    return "\n".join(top_headlines)
+
+
 # Get today's date
 today = datetime.now().strftime('%#d %B %Y')
 
 # 🔹 Top 20 in 24 hours
-top_news_24h = fetch_market_headlines(hours=24, count=20)
-print("✅ Top News 24H:\n", top_news_24h)  # 👈 Add this
+top_news_24h = fetch_market_headlines_24h(count=20)
+print("✅ Top News 24H:\n", top_news_24h)
 
 # 🔹 Top 20 in past 5 days
-top_news_5d_raw = fetch_market_headlines(hours=120, count=20)
+top_news_5d_raw = fetch_market_headlines_5d(count=20)
 top_news_5d = "\n".join([f"{i+1}. {line}" for i, line in enumerate(top_news_5d_raw.splitlines())])
-print("✅ Top News 5D:\n", top_news_5d)  # 👈 Add this
+print("✅ Top News 5D:\n", top_news_5d)
+
 
 # 🔹 Final prompt
 prompt = f"""
@@ -79,7 +114,7 @@ prompt = f"""
 Gunakan kedua-dua senarai ini untuk menulis laporan pasaran harian secara lengkap dan menyeluruh.
 
 🔥 Poin Utama:  
-Senaraikan **5 cerita utama pasaran** hari ini (gunakan nombor 1–5), berdasarkan berita di atas.
+Senaraikan **5 cerita utama pasaran** hari ini (gunakan nombor 1–5), berdasarkan berita di atas. (Jarakkan setiap point untuk ada spacing sikit)
 
 🌍 Sentimen Pasaran:  
 1 perenggan pendek yang merumuskan mood pasaran secara keseluruhan (risk-on, risk-off, bercampur, berhati-hati), berdasarkan berita.
