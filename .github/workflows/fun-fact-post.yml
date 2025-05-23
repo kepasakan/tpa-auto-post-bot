@@ -27,6 +27,6 @@ jobs:
       env:
         OPENAI_API_KEY_FUN_FACT: ${{ secrets.OPENAI_API_KEY_FUN_FACT }}
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-        GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
+        GROUP_CHAT_ID_FUN: ${{ secrets.GROUP_CHAT_ID_FUN }}
       run: |
         python src/fun_fact.py

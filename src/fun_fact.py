@@ -11,7 +11,7 @@ load_dotenv()
 # ENV VARS
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY_FUN_FACT")  # use your new working key
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-GROUP_CHAT_ID = os.getenv("GROUP_CHAT_ID")
+GROUP_CHAT_ID_FUN = os.getenv("GROUP_CHAT_ID_FUN")
 
 # Setup OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -76,7 +76,7 @@ def generate_fun_fact():
 # Send to Telegram
 async def main():
     fact = generate_fun_fact()
-    await bot.send_message(chat_id=GROUP_CHAT_ID, text=fact, parse_mode='Markdown')
+    await bot.send_message(chat_id=GROUP_CHAT_ID_FUN, text=fact, parse_mode='Markdown')
 
 # Run
 if __name__ == "__main__":
