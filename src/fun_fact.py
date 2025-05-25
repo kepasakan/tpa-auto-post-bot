@@ -36,6 +36,8 @@ Hari ini ialah: **{today}**
 - Disampaikan dalam **2 perenggan pendek sahaja** untuk mudah dibaca di Telegram
 - Sertakan nombor/angka real jika sesuai
 
+✅ Output WAJIB ditulis dalam **Bahasa Melayu** sepenuhnya.
+
 ✅ Format output WAJIB seperti ini:
 
 🎉 **Fun Fact Trading Hari Ini**  
@@ -57,7 +59,7 @@ Kalau anda belanja $100 untuk pizza tahun 2010 🍕, kenyang sehari. Tapi kalau 
 Bezanya hanya satu keputusan — makan sekarang, atau sabar & biar duit bekerja. Jadi... nak belanja kopi lagi hari ni, atau simpan untuk future portfolio? 😉  
 #CryptoCrazy #MindBlown
 
-Tugas anda hari ini adalah hasilkan **1 fun fact unik dan berformat seperti di atas** berdasarkan fakta sebenar.
+Tugas anda hari ini adalah hasilkan **1 fun fact unik dan berformat seperti di atas**, dalam Bahasa Melayu, berdasarkan fakta sebenar.
 """
 
 # Generate fun fact using OpenAI
