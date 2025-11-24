@@ -11,7 +11,7 @@ load_dotenv()
 # ENV VARS
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY_FUN_FACT")  # Reusing the existing key variable or you can create a new one
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-GROUP_CHAT_ID_EDUCATION = os.getenv("GROUP_CHAT_ID_EDUCATION")  # Make sure to add this to your .env file
+GROUP_CHAT_ID_EDUCATION = os.getenv("GROUP_CHAT_ID_FUN")  # Make sure to add this to your .env file
 
 # Setup OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
