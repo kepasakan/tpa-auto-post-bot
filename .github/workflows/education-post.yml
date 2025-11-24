@@ -1,0 +1,32 @@
+name: Run TPA Education Bot
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 10:00AM MYT (UTC+8)
+  workflow_dispatch:
+
+jobs:
+  education-post:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout repo
+      uses: actions/checkout@v3
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: 🎓 Run Education AI Agent (OpenAI)
+      env:
+        OPENAI_API_KEY_FUN_FACT: ${{ secrets.OPENAI_API_KEY_FUN_FACT }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        GROUP_CHAT_ID_EDUCATION: ${{ secrets.GROUP_CHAT_ID_EDUCATION }}
+      run: |
+        python src/education.py
